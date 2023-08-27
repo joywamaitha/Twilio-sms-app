@@ -1,31 +1,25 @@
-name: Scheduled Message
-
+name: Send Message
 on:
   schedule:
-     - cron: "0 19 * * *"
-
+    - cron: "0 9 * * *"
 jobs:
-     send_message:
-       runs-on: ubuntu-latest
-
-       steps:
-       - name: Checkout Repository
-         uses: actions/checkout@v2
-
-       - name: Set up Python
-         uses: actions/setup-python@v2
-         with:
-           python-version: 3.x
-
-       - name: Install Dependencies
-         run: |
-           python -m pip install --upgrade pip
-           pip install -r requirements.txt
-
-       - name: Run Script
-         run: python run.py
-         env:
-           TWILIO_SID: ${{ secrets.TWILIO_SID }}
-           TWILIO_TOKEN: ${{ secrets.TWILIO_TOKEN }}
-           TWILIO_PHONE: ${{ secrets.TWILIO_PHONE }}
-           RECIPIENT_PHONE: ${{ secrets.RECIPIENT_PHONE }}
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Send Message
+        env:
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_TOKEN }}
+          TWILIO_PHONE_NUMBER: ${{ secrets.TWILIO_PHONE }}
+          MESSAGE: "Hello"
+        run: |
+          python run.py
