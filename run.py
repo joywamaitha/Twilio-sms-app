@@ -2,10 +2,10 @@ from twilio.rest import Client
 import os
 
 def send_message():
-    account_sid = os.environ.get('TWILIO_SID')
-    auth_token = os.environ.get('TWILIO_TOKEN ')
-    twilio_phone = os.environ.get('TWILIO_PHONE')
-    recipient_phone = os.environ.get('RECIPIENT_PHONE')
+    account_sid = os.environ.get('TWILIO_ACCOUNT_SID')
+    auth_token = os.environ.get('TWILIO_AUTH_TOKEN')
+    twilio_phone = os.environ.get('TWILIO_PHONE_NUMBER')
+    recipient_phone = os.environ.get('RECIPIENT_PHONE')  # Retrieve recipient phone from secrets
 
     client = Client(account_sid, auth_token)
 
@@ -16,7 +16,6 @@ def send_message():
     )
 
     print("Message sent:", message.sid)
-
 
 if __name__ == "__main__":
     send_message()
